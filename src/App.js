@@ -5,7 +5,8 @@ function App() {
   const [query, setQuery] = useState('');
   const [recipes, setRecipes] = useState([]);
 
-  const YOUR_API_KEY = '9851f9cd92071858dd00eba8427c0c20e9778789';
+  const YOUR_APP_ID = 'a913e0d2';
+  const YOUR_APP_KEY = '7905dd7ffc36d8744893248d676879cf';
 
   const handleChange = (event) => {
     setQuery(event.target.value);
@@ -15,9 +16,9 @@ function App() {
     event.preventDefault();
     try {
       const response = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${YOUR_API_KEY}`
+        `https://api.edamam.com/search?q=${query}&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}`
       );
-      setRecipes(response.data.results);
+      setRecipes(response.data.hits);
     } catch (error) {
       console.error(error);
     }
@@ -25,7 +26,7 @@ function App() {
 
   return (
     <div>
-      <h1>Recetas de Spoonacular</h1>
+      <h1>Recetas de Edamam</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -37,9 +38,9 @@ function App() {
       </form>
       <div>
         {recipes.map((recipe) => (
-          <div key={recipe.id}>
-            <h2>{recipe.title}</h2>
-            <img src={recipe.image} alt={recipe.title} />
+          <div key={recipe.recipe.uri}>
+            <h2>{recipe.recipe.label}</h2>
+            <img src={recipe.recipe.image} alt={recipe.recipe.label} />
           </div>
         ))}
       </div>

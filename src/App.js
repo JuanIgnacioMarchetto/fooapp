@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './App.css'
 
 function App() {
   const [query, setQuery] = useState('');
@@ -23,7 +24,6 @@ function App() {
       console.error(error);
     }
   };
-
   return (
     <div>
       <h1>Recetas de Edamam</h1>
@@ -36,16 +36,17 @@ function App() {
         />
         <button type="submit">Buscar</button>
       </form>
-      <div>
+      <div className="recipes">
         {recipes.map((recipe) => (
-          <div key={recipe.recipe.uri}>
+          <div key={recipe.recipe.uri} className="recipe">
             <h2>{recipe.recipe.label}</h2>
             <img src={recipe.recipe.image} alt={recipe.recipe.label} />
+            <p>Servings: {recipe.recipe.yield}</p>
+            <p>Calories: {Math.round(recipe.recipe.calories)}</p>
+            
           </div>
         ))}
       </div>
     </div>
-  );
-}
-
-export default App;
+  );}
+   export default App
